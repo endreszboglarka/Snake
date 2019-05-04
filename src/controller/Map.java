@@ -4,15 +4,13 @@ import model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Map {
     public Snake snake;
-    private List<List<Field>> fields;
+    public List<List<Field>> fields;
 
     public Timer timer;
 
@@ -26,7 +24,7 @@ public class Map {
                         )
                 )
         ));
-
+        fields = new ArrayList<>();
         timer = new Timer(1000, e -> snake.move());
     }
 }
