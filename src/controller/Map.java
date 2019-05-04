@@ -17,14 +17,16 @@ public class Map {
     public Timer timer;
 
     public Map() {
-        snake = new Snake(new Head(new Point(3,3), Direction.RIGHT), new Tail(new ArrayList<SnakePart>(
-                Arrays.asList(new SnakePart(new Point(2, 3)))
-        )));
-        timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                snake.move();
-            }
-        });
+        snake = new Snake(new Head(new Point(3,3), Direction.DOWN),
+                new Tail(new ArrayList<>(
+                Arrays.asList(
+                        new SnakePart(new Point(2, 3)),
+                        new SnakePart(new Point(1,3)),
+                        new SnakePart(new Point(0,3))
+                        )
+                )
+        ));
+
+        timer = new Timer(1000, e -> snake.move());
     }
 }

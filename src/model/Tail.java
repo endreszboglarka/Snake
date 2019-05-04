@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.*;
+import java.util.Collections;
 import java.util.List;
 
 public class Tail {
@@ -10,8 +12,15 @@ public class Tail {
     }
 
     public void move(Head head) {
-        body.get(body.size()-1).position = head.position;
-        System.out.println(body.get(body.size()-1).position);
+        body.get(body.size() - 1).position.x = head.position.x;
+        body.get(body.size() - 1).position.y = head.position.y;
+        body.add(0, new SnakePart(
+                        new Point(
+                                body.get(body.size() - 1).position.x,
+                                body.get(body.size() - 1).position.y)
+                )
+        );
+        body.remove(body.get(body.size() - 1));
     }
 
     public void grow(Head head, Apple apple) {

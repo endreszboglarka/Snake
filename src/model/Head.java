@@ -2,7 +2,7 @@ package model;
 
 import java.awt.*;
 
-public class Head extends Field{
+public class Head extends Field {
     private Direction direction;
 
     public Head(Point position, Direction direction) {
@@ -12,7 +12,6 @@ public class Head extends Field{
 
     public void move() {
         position.translate(direction.value().x, direction.value().y);
-        System.out.println(this.position);
     }
 
     public void changeDirection(Direction direction) {
