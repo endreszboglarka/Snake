@@ -25,6 +25,6 @@ public class Map {
                 )
         ));
         fields = new ArrayList<>();
-        timer = new Timer(100, e -> snake.move());
+        timer = new Timer(500, e -> snake.move());
     }
 }

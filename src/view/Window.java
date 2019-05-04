@@ -1,14 +1,25 @@
 package view;
 
 import controller.Map;
+import model.Direction;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.HashMap;
 import java.util.stream.IntStream;
 
 public class Window extends JFrame {
     private int size = 50;
     private Map map;
+
+    private HashMap<Character, Direction> keyDirectionBinding = new HashMap<Character, Direction>() {{
+        put('w', Direction.UP);
+        put('s', Direction.DOWN);
+        put('a', Direction.LEFT);
+        put('d', Direction.RIGHT);
+    }};
 
     public Window() {
         map = new Map();
@@ -20,6 +31,23 @@ public class Window extends JFrame {
         setVisible(true);
         map.timer.start();
         map.timer.addActionListener(e -> paint(getGraphics()));
+        addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                System.out.println(e.getKeyChar());
+                if (keyDirectionBinding.containsKey(e.getKeyChar())) {
+                    map.snake.getHead().changeDirection(keyDirectionBinding.get(e.getKeyChar()));
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
@@ -47,6 +75,5 @@ public class Window extends JFrame {
                         size,
                         size));
     }
-
 
 }
