@@ -26,6 +26,18 @@ public class Window extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        if (!map.snake.isDead(map.fields)) {
+            drawSnake(g);
+        } else {
+            drawSnake(g);
+            map.timer.stop();
+            System.out.println("asd");
+            JOptionPane.showMessageDialog(this,
+                    "meghalt volna :( ");
+        }
+    }
+
+    private void drawSnake(Graphics g) {
         g.fillRect(map.snake.getHead().position.x * size, map.snake.getHead().position.y * size, size, size);
         IntStream
                 .range(0, map.snake.getTail().body.size())
@@ -34,9 +46,6 @@ public class Window extends JFrame {
                         map.snake.getTail().body.get(i).position.y * size,
                         size,
                         size));
-        if (map.snake.isDead(map.fields)) {
-            System.out.println("meghalt volna :( ");
-        }
     }
 
 
