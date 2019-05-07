@@ -29,16 +29,28 @@ public class Snake {
         return field instanceof Block || field instanceof SnakePart;
     }
 
+    private boolean headIsBelowMinimalDimensions() {
+        return head.position.x < 0 || head.position.y < 0;
+    }
+
+    private boolean headIsBeyondMaximalDimensions() {
+        return head.position.x > DIMENSION / FIELDWIDTH || head.position.y > DIMENSION / FIELDWIDTH;
+    }
+
+    private boolean headIsOutOfMap() {
+        return headIsBelowMinimalDimensions() || headIsBeyondMaximalDimensions();
+    }
+
+    private boolean headIsOnObstacle(List<List<Field>> fields) {
+        if (fields != null && fields.size() > 0) {
+            Field nextStep = fields.get(head.position.x).get(head.position.y);
+            return isFieldABlockOrSnakePart(nextStep);
+        }
+        return false;
+    }
 
     public boolean isDead(List<List<Field>> fields) {
-        Field nextStep = fields.get(head.nextPosition().x).get(head.nextPosition().y);
-        if (isFieldABlockOrSnakePart(nextStep)) {
-            return true;
-        }
-        if (head.position.x < 0 || head.position.y < 0) {
-            return true;
-        }
-        return head.position.x > DIMENSION / FIELDWIDTH || head.position.y > DIMENSION / FIELDWIDTH;
+        return headIsOutOfMap() || headIsOnObstacle(fields);
     }
 
     public Tail getTail() {
