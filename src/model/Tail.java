@@ -13,12 +13,13 @@ public class Tail {
     public void move(Head head) {
         if (body.size() > 0) {
             SnakePart lastSnakePart = body.get(body.size() - 1);
-            lastSnakePart.position.x = head.position.x;
-            lastSnakePart.position.y = head.position.y;
+            Point lastSnakePartPosition = lastSnakePart.position;
+            lastSnakePartPosition.x = head.position.x;
+            lastSnakePartPosition.y = head.position.y;
             body.add(0, new SnakePart(
                             new Point(
-                                    lastSnakePart.position.x,
-                                    lastSnakePart.position.y)
+                                    lastSnakePartPosition.x,
+                                    lastSnakePartPosition.y)
                     )
             );
             body.remove(lastSnakePart);

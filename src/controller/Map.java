@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static utils.Constants.DIMENSION;
 import static utils.Constants.SPEED;
 
 public class Map {

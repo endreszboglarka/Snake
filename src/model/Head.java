@@ -17,4 +17,8 @@ public class Head extends Field {
     public void changeDirection(Direction direction) {
         this.direction = direction;
     }
+
+    public Point nextPosition() {
+        return new Point(direction.value().x + position.x, direction.value().y + position.y);
+    }
 }

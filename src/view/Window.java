@@ -1,28 +1,20 @@
 package view;
 
 import controller.Map;
-import model.Direction;
-import utils.Constants;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.HashMap;
 import java.util.stream.IntStream;
 
-import static utils.Constants.DIMENSION;
-import static utils.Constants.FIELDWIDTH;
+import static utils.Constants.*;
+
 
 public class Window extends JFrame {
     private Map map;
 
-    private HashMap<Character, Direction> keyDirectionBinding = new HashMap<Character, Direction>() {{
-        put('w', Direction.UP);
-        put('s', Direction.DOWN);
-        put('a', Direction.LEFT);
-        put('d', Direction.RIGHT);
-    }};
+
 
     public Window() {
         map = new Map();
@@ -41,8 +33,8 @@ public class Window extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (keyDirectionBinding.containsKey(e.getKeyChar())) {
-                    map.snake.getHead().changeDirection(keyDirectionBinding.get(e.getKeyChar()));
+                if (KEYDIRECTIONBINDING.containsKey(e.getKeyChar())) {
+                    map.snake.getHead().changeDirection(KEYDIRECTIONBINDING.get(e.getKeyChar()));
                 }
             }
 

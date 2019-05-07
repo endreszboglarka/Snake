@@ -2,7 +2,6 @@ package model;
 
 import java.awt.*;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static utils.Constants.DIMENSION;
 import static utils.Constants.FIELDWIDTH;
@@ -23,24 +22,18 @@ public class Snake {
     }
 
     public void grow() {
-        tail.grow(head, new Apple(new Point(10,10)));
+        tail.grow(head, new Apple(new Point(10, 10)));
     }
 
-    public boolean isDead(List<List<Field>> fields) {
+    private boolean isFieldABlockOrSnakePart(Field field) {
+        return field instanceof Block || field instanceof SnakePart;
+    }
 
-        AtomicBoolean isDeadByObject = new AtomicBoolean(false);
-        for (List<Field> row : fields) {
-            for (Field field : row) {
-                if (field instanceof SnakePart || field instanceof Block) {
-                    if (
-                            field.position.x == head.position.x &&
-                                    field.position.y == head.position.y
-                    ) {
-                        isDeadByObject.set(true);
-                        return isDeadByObject.get();
-                    }
-                }
-            }
+
+    public boolean isDead(List<List<Field>> fields) {
+        Field nextStep = fields.get(head.nextPosition().x).get(head.nextPosition().y);
+        if (isFieldABlockOrSnakePart(nextStep)) {
+            return true;
         }
         if (head.position.x < 0 || head.position.y < 0) {
             return true;
