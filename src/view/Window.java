@@ -2,6 +2,7 @@ package view;
 
 import controller.Map;
 import model.Direction;
+import utils.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,8 +11,10 @@ import java.awt.event.KeyListener;
 import java.util.HashMap;
 import java.util.stream.IntStream;
 
+import static utils.Constants.DIMENSION;
+import static utils.Constants.FIELDWIDTH;
+
 public class Window extends JFrame {
-    private int size = 50;
     private Map map;
 
     private HashMap<Character, Direction> keyDirectionBinding = new HashMap<Character, Direction>() {{
@@ -24,7 +27,7 @@ public class Window extends JFrame {
     public Window() {
         map = new Map();
         setTitle("Snake");
-        setSize(500, 500);
+        setSize(DIMENSION, DIMENSION);
         setLocation(0, 0);
         setLayout(null);
         setResizable(false);
@@ -38,7 +41,6 @@ public class Window extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                System.out.println(e.getKeyChar());
                 if (keyDirectionBinding.containsKey(e.getKeyChar())) {
                     map.snake.getHead().changeDirection(keyDirectionBinding.get(e.getKeyChar()));
                 }
@@ -54,26 +56,23 @@ public class Window extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        if (!map.snake.isDead(map.fields)) {
-            drawSnake(g);
-        } else {
-            drawSnake(g);
+        if (map.snake.isDead(map.fields)) {
             map.timer.stop();
-            System.out.println("asd");
             JOptionPane.showMessageDialog(this,
                     "meghalt volna :( ");
         }
+        drawSnake(g);
     }
 
     private void drawSnake(Graphics g) {
-        g.fillRect(map.snake.getHead().position.x * size, map.snake.getHead().position.y * size, size, size);
+        g.fillRect(map.snake.getHead().position.x * FIELDWIDTH, map.snake.getHead().position.y * FIELDWIDTH, FIELDWIDTH, FIELDWIDTH);
         IntStream
                 .range(0, map.snake.getTail().body.size())
                 .forEach(i -> g.fillRect(
-                        map.snake.getTail().body.get(i).position.x * size,
-                        map.snake.getTail().body.get(i).position.y * size,
-                        size,
-                        size));
+                        map.snake.getTail().body.get(i).position.x * FIELDWIDTH,
+                        map.snake.getTail().body.get(i).position.y * FIELDWIDTH,
+                        FIELDWIDTH,
+                        FIELDWIDTH));
     }
 
 }

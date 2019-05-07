@@ -11,15 +11,18 @@ public class Tail {
     }
 
     public void move(Head head) {
-        body.get(body.size() - 1).position.x = head.position.x;
-        body.get(body.size() - 1).position.y = head.position.y;
-        body.add(0, new SnakePart(
-                        new Point(
-                                body.get(body.size() - 1).position.x,
-                                body.get(body.size() - 1).position.y)
-                )
-        );
-        body.remove(body.get(body.size() - 1));
+        if (body.size() > 0) {
+            SnakePart lastSnakePart = body.get(body.size() - 1);
+            lastSnakePart.position.x = head.position.x;
+            lastSnakePart.position.y = head.position.y;
+            body.add(0, new SnakePart(
+                            new Point(
+                                    lastSnakePart.position.x,
+                                    lastSnakePart.position.y)
+                    )
+            );
+            body.remove(lastSnakePart);
+        }
     }
 
     public void grow(Head head, Apple apple) {

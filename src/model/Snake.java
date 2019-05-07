@@ -4,6 +4,9 @@ import java.awt.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static utils.Constants.DIMENSION;
+import static utils.Constants.FIELDWIDTH;
+
 public class Snake {
     private Head head;
     private Tail tail;
@@ -42,7 +45,7 @@ public class Snake {
         if (head.position.x < 0 || head.position.y < 0) {
             return true;
         }
-        return head.position.x > 9 || head.position.y > 9;
+        return head.position.x > DIMENSION / FIELDWIDTH || head.position.y > DIMENSION / FIELDWIDTH;
     }
 
     public Tail getTail() {
