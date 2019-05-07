@@ -1,6 +1,7 @@
 package view;
 
 import controller.Map;
+import utils.SnakeKeyListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +15,6 @@ import static utils.Constants.*;
 public class Window extends JFrame {
     private Map map;
 
-
-
     public Window() {
         map = new Map();
         setTitle("Snake");
@@ -26,34 +25,19 @@ public class Window extends JFrame {
         setVisible(true);
         map.timer.start();
         map.timer.addActionListener(e -> paint(getGraphics()));
-        addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (KEYDIRECTIONBINDING.containsKey(e.getKeyChar())) {
-                    map.snake.getHead().changeDirection(KEYDIRECTIONBINDING.get(e.getKeyChar()));
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+        addKeyListener(new SnakeKeyListener(map));
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        drawSnake(g);
         if (map.snake.isDead(map.fields)) {
             map.timer.stop();
             JOptionPane.showMessageDialog(this,
                     "meghalt volna :( ");
         }
-        drawSnake(g);
     }
 
     private void drawSnake(Graphics g) {
