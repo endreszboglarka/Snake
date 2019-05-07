@@ -1,7 +1,9 @@
 package model;
 
 import java.awt.*;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static utils.Constants.DIMENSION;
 import static utils.Constants.FIELDWIDTH;
@@ -9,7 +11,6 @@ import static utils.Constants.FIELDWIDTH;
 public class Snake {
     private Head head;
     private Tail tail;
-
 
     public Snake(Head head, Tail tail) {
         this.head = head;
@@ -41,16 +42,26 @@ public class Snake {
         return headIsBelowMinimalDimensions() || headIsBeyondMaximalDimensions();
     }
 
-    private boolean headIsOnObstacle(List<List<Field>> fields) {
+    private boolean headIsOnObstacle(List<Field> fields) {
         if (fields != null && fields.size() > 0) {
-            Field nextStep = fields.get(head.position.x).get(head.position.y);
+            Field nextStep = fields.stream().filter(field -> field.position.equals(head.position)).collect(Collectors.toList()).get(0);
             return isFieldABlockOrSnakePart(nextStep);
         }
         return false;
     }
 
-    public boolean isDead(List<List<Field>> fields) {
-        return headIsOutOfMap() || headIsOnObstacle(fields);
+    private boolean headIsOnTail() {
+        if (tail.body != null && tail.body.size() > 0) {
+            List<Field> elementsOnHead = tail.body.stream().filter(field -> field.position.equals(head.position)).collect(Collectors.toList());
+            if(elementsOnHead.size() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isDead(List<Field> fields) {
+        return headIsOutOfMap() || headIsOnObstacle(fields) || headIsOnTail();
     }
 
     public Tail getTail() {

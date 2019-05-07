@@ -5,11 +5,10 @@ import utils.SnakeKeyListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.stream.IntStream;
 
-import static utils.Constants.*;
+import static utils.Constants.DIMENSION;
+import static utils.Constants.FIELDWIDTH;
 
 
 public class Window extends JFrame {
@@ -32,11 +31,14 @@ public class Window extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        drawSnake(g);
         if (map.snake.isDead(map.fields)) {
+            drawSnake(g);
             map.timer.stop();
+            int score = map.snake.getTail().body.size() + 1;
             JOptionPane.showMessageDialog(this,
-                    "meghalt volna :( ");
+                    "Your score is ".concat(Integer.toString(score).concat(".")));
+        } else {
+            drawSnake(g);
         }
     }
 
