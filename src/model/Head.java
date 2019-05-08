@@ -1,5 +1,7 @@
 package model;
 
+import utils.Constants;
+
 import java.awt.*;
 
 public class Head extends Field {
@@ -15,7 +17,9 @@ public class Head extends Field {
     }
 
     public void changeDirection(Direction direction) {
-        this.direction = direction;
+        if (!Constants.OPPOSITESITES.get(this.direction).equals(direction)) {
+            this.direction = direction;
+        }
     }
 
     public Point prevPosition() {
