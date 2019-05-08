@@ -5,7 +5,6 @@ import utils.SnakeKeyListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.stream.IntStream;
 
 import static utils.Constants.DIMENSION;
 import static utils.Constants.FIELDWIDTH;
@@ -31,6 +30,7 @@ public class Window extends JFrame {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        drawBlocks(g);
         if (map.snake.isDead(map.fields)) {
             drawSnake(g);
             map.timer.stop();
@@ -43,14 +43,23 @@ public class Window extends JFrame {
     }
 
     private void drawSnake(Graphics g) {
+        g.setColor(Color.blue);
         g.fillRect(map.snake.getHead().position.x * FIELDWIDTH, map.snake.getHead().position.y * FIELDWIDTH, FIELDWIDTH, FIELDWIDTH);
-        IntStream
-                .range(0, map.snake.getTail().body.size())
+        map.snake.getTail().body
                 .forEach(i -> g.fillRect(
-                        map.snake.getTail().body.get(i).position.x * FIELDWIDTH,
-                        map.snake.getTail().body.get(i).position.y * FIELDWIDTH,
+                        i.position.x * FIELDWIDTH,
+                        i.position.y * FIELDWIDTH,
                         FIELDWIDTH,
                         FIELDWIDTH));
     }
 
+    private void drawBlocks(Graphics g) {
+        g.setColor(Color.black);
+        map.fields
+                .forEach(i -> g.fillRect(
+                        i.position.x * FIELDWIDTH,
+                        i.position.y * FIELDWIDTH,
+                        FIELDWIDTH,
+                        FIELDWIDTH));
+    }
 }
