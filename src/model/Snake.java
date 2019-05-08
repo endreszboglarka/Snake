@@ -38,6 +38,18 @@ public class Snake {
         return headIsBelowMinimalDimensions() || headIsBeyondMaximalDimensions();
     }
 
+    public boolean containsPoint(Point point) {
+        if (head.position.equals(point)) {
+            return true;
+        } else {
+            for (SnakePart snakePart : tail.body) {
+                if (snakePart.position.equals(point)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private boolean headIsOnTail() {
         if (tail.body != null && tail.body.size() > 0) {

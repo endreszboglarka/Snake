@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static utils.Constants.FIELDCOUNT;
@@ -32,12 +31,12 @@ public class Map {
                 )
         );
         fields = new ArrayList<>();
-        fields.add(new Block(new Point(randomPos(), randomPos())));
+        generateBlocks(10);
         timer = new Timer(SPEED, e -> snake.move());
     }
 
     private void generateBlocks(int amount) {
-        IntStream.range(0, amount).parallel().forEach(it -> generateBlock());
+        IntStream.range(0, amount).forEach(it -> generateBlock());
     }
 
     private int randomPos() {
@@ -49,15 +48,25 @@ public class Map {
         do {
             xCoord = randomPos();
             yCoord = randomPos();
-        } while (fieldIsNotTaken(xCoord, yCoord));
+        } while (pointIsTaken(new Point(xCoord, yCoord)));
         fields.add(new Block(new Point(xCoord, yCoord)));
     }
 
-    private boolean fieldIsNotTaken(int xCoord, int yCoord) {
-        Point positionToCompare = new Point(xCoord, yCoord);
-        List<Field> previousField = fields.parallelStream().filter(field -> field.position.equals(positionToCompare)
-        ).collect(Collectors.toList());
-        return previousField instanceof Block || previousField instanceof SnakePart || previousField instanceof Head;
+    private boolean pointIsTaken(Point point) {
+        return snakeContainsPoint(point) || fieldsContainPoint(point);
+    }
+
+    private boolean snakeContainsPoint(Point point) {
+        return snake.containsPoint(point);
+    }
+
+    private boolean fieldsContainPoint(Point point) {
+        for (Field field : fields) {
+            if (field.position.equals(point)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
