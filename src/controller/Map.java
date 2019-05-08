@@ -6,7 +6,7 @@ import utils.Constants;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -25,15 +25,15 @@ public class Map {
     public Map() {
         snake = new Snake(new Head(new Point(0, FIELDCOUNT / 2), Direction.DOWN),
                 new Tail(new ArrayList<>(
-                Arrays.asList(
-                        new SnakePart(new Point(0, FIELDCOUNT / 2 - 1))
+                        Collections.singletonList(
+                                new SnakePart(new Point(0, FIELDCOUNT / 2 - 1))
                         )
                 )
                 )
         );
         fields = new ArrayList<>();
         generateBlocks();
-        generateApple();
+        apple =  generateApple();
         timer = new Timer(SPEED, e -> snake.move());
     }
 
@@ -54,13 +54,13 @@ public class Map {
         fields.add(new Block(new Point(xCoord, yCoord)));
     }
 
-    private void generateApple() {
+    public Apple generateApple() {
         int xCoord, yCoord;
         do {
             xCoord = randomPos();
             yCoord = randomPos();
         } while (pointIsTaken(new Point(xCoord, yCoord)));
-        apple = new Apple(new Point(xCoord, yCoord));
+        return new Apple(new Point(xCoord, yCoord));
     }
 
     private boolean pointIsTaken(Point point) {

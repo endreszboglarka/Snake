@@ -21,17 +21,17 @@ public class Snake {
         head.move();
     }
 
-    public void grow(Apple apple) {
-        tail.grow(head, apple);
+    private void grow() {
+        tail.grow(head);
     }
 
-    public void isOnApple(Apple apple) {
+    public boolean isOnApple(Apple apple) {
         if (this.head.position.equals(apple.position)) {
-            System.out.println("on apple");
-            this.grow(apple);
+            this.grow();
+            return true;
         }
+        return false;
     }
-
 
     private boolean headIsBelowMinimalDimensions() {
         return head.position.x < 0 || head.position.y < 0;
@@ -71,22 +71,23 @@ public class Snake {
     }
 
     public boolean isDead(List<Field> fields) {
-        return headIsOutOfMap() || headIsOnTail();
+        return headIsOutOfMap() || headIsOnTail() || isOnBlock(fields);
     }
 
+    private boolean isOnBlock(List<Field> fields) {
+        for (Field field : fields) {
+            if (field.position.equals(head.position)) {
+                return true;
+            }
+        }
+        return false;
+    }
     public Tail getTail() {
         return tail;
-    }
-
-    public void setTail(Tail tail) {
-        this.tail = tail;
     }
 
     public Head getHead() {
         return head;
     }
 
-    public void setHead(Head head) {
-        this.head = head;
-    }
 }
