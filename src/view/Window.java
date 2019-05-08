@@ -10,6 +10,7 @@ import static utils.Constants.DIMENSION;
 
 public class Window extends JFrame {
     private GamePanel gamePanel;
+    private GameMenu gameMenu;
 
     public Window() {
         setTitle("Snake");
@@ -17,9 +18,12 @@ public class Window extends JFrame {
         setLayout(new BorderLayout());
         setResizable(false);
         setVisible(true);
+        gameMenu = new GameMenu("Options");
+        setJMenuBar(gameMenu);
         gamePanel = new GamePanel(getGraphics());
-        getContentPane().add(gamePanel, BorderLayout.NORTH);
+        add(gamePanel);
         addKeyListener(new SnakeKeyListener(gamePanel.map));
+        pack();
     }
 
 
