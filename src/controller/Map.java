@@ -18,6 +18,7 @@ public class Map {
     private final Random random = new Random();
     public Snake snake;
     public List<Field> fields;
+    public Apple apple;
 
     public Timer timer;
 
@@ -59,7 +60,7 @@ public class Map {
             xCoord = randomPos();
             yCoord = randomPos();
         } while (pointIsTaken(new Point(xCoord, yCoord)));
-        fields.add(new Apple(new Point(xCoord, yCoord)));
+        apple = new Apple(new Point(xCoord, yCoord));
     }
 
     private boolean pointIsTaken(Point point) {

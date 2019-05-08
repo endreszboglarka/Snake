@@ -5,8 +5,8 @@ import model.Direction;
 import java.util.HashMap;
 
 public class Constants {
-    public static final int FIELDWIDTH = 25;
-    public static final int DIMENSION = 500;
+    public static final int FIELDWIDTH = 20;
+    public static final int DIMENSION = 800;
     public static final int FIELDCOUNT = DIMENSION / FIELDWIDTH;
     public static final int SPEED = 1000 / (100 / FIELDWIDTH);
     public static final int BLOCKCOUNT = 5;

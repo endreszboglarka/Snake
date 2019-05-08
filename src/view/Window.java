@@ -1,7 +1,6 @@
 package view;
 
 import controller.Map;
-import model.Apple;
 import model.Field;
 import utils.SnakeKeyListener;
 
@@ -33,6 +32,7 @@ public class Window extends JFrame {
     public void paint(Graphics g) {
         super.paint(g);
         drawBlocks(g);
+        map.snake.isOnApple(map.apple);
         if (map.snake.isDead(map.fields)) {
             drawSnake(g);
             map.timer.stop();
@@ -50,13 +50,8 @@ public class Window extends JFrame {
     }
 
     private void drawBlocks(Graphics g) {
-        map.fields.forEach(i -> {
-            if (i instanceof Apple) {
-                drawField(g, i, Color.red);
-            } else {
-                drawField(g, i, Color.black);
-            }
-        });
+        map.fields.forEach(i -> drawField(g, i, Color.black));
+        drawField(g, map.apple, Color.red);
     }
 
 

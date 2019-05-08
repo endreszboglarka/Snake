@@ -21,8 +21,15 @@ public class Snake {
         head.move();
     }
 
-    public void grow() {
-        tail.grow(head, new Apple(new Point(10, 10)));
+    public void grow(Apple apple) {
+        tail.grow(head, apple);
+    }
+
+    public void isOnApple(Apple apple) {
+        if (this.head.position.equals(apple.position)) {
+            System.out.println("on apple");
+            this.grow(apple);
+        }
     }
 
 

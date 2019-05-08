@@ -27,7 +27,6 @@ public class Tail {
     }
 
     public void grow(Head head, Apple apple) {
-        body.add(new SnakePart(head.position));
-        head.position = apple.position;
+        body.add(new SnakePart(head.prevPosition()));
     }
 }
