@@ -31,12 +31,13 @@ public class Map {
                 )
         );
         fields = new ArrayList<>();
-        generateBlocks(10);
+        generateBlocks();
+        generateApple();
         timer = new Timer(SPEED, e -> snake.move());
     }
 
-    private void generateBlocks(int amount) {
-        IntStream.range(0, amount).forEach(it -> generateBlock());
+    private void generateBlocks() {
+        IntStream.range(0, Constants.BLOCKCOUNT).forEach(it -> generateBlock());
     }
 
     private int randomPos() {
@@ -50,6 +51,15 @@ public class Map {
             yCoord = randomPos();
         } while (pointIsTaken(new Point(xCoord, yCoord)));
         fields.add(new Block(new Point(xCoord, yCoord)));
+    }
+
+    private void generateApple() {
+        int xCoord, yCoord;
+        do {
+            xCoord = randomPos();
+            yCoord = randomPos();
+        } while (pointIsTaken(new Point(xCoord, yCoord)));
+        fields.add(new Apple(new Point(xCoord, yCoord)));
     }
 
     private boolean pointIsTaken(Point point) {

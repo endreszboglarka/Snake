@@ -1,6 +1,7 @@
 package view;
 
 import controller.Map;
+import model.Apple;
 import model.Field;
 import utils.SnakeKeyListener;
 
@@ -49,8 +50,15 @@ public class Window extends JFrame {
     }
 
     private void drawBlocks(Graphics g) {
-        map.fields.forEach(i -> drawField(g, i, Color.black));
+        map.fields.forEach(i -> {
+            if (i instanceof Apple) {
+                drawField(g, i, Color.red);
+            } else {
+                drawField(g, i, Color.black);
+            }
+        });
     }
+
 
     private void drawField(Graphics g, Field field, Color color) {
         g.setColor(color);
