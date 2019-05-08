@@ -2,12 +2,14 @@ package model;
 
 import java.awt.*;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
+
+import static utils.Constants.DIMENSION;
+import static utils.Constants.FIELDWIDTH;
 
 public class Snake {
     private Head head;
     private Tail tail;
-
 
     public Snake(Head head, Tail tail) {
         this.head = head;
@@ -19,45 +21,73 @@ public class Snake {
         head.move();
     }
 
-    public void grow() {
-        tail.grow(head, new Apple(new Point(10,10)));
+    private void grow() {
+        tail.grow(head);
     }
 
-    public boolean isDead(List<List<Field>> fields) {
+    public boolean isOnApple(Apple apple) {
+        if (this.head.position.equals(apple.position)) {
+            this.grow();
+            return true;
+        }
+        return false;
+    }
 
-        AtomicBoolean isDeadByObject = new AtomicBoolean(false);
-        for (List<Field> row : fields) {
-            for (Field field : row) {
-                if (field instanceof SnakePart || field instanceof Block) {
-                    if (
-                            field.position.x == head.position.x &&
-                                    field.position.y == head.position.y
-                    ) {
-                        isDeadByObject.set(true);
-                        return isDeadByObject.get();
-                    }
+    private boolean headIsBelowMinimalDimensions() {
+        return head.position.x < 0 || head.position.y < 0;
+    }
+
+    private boolean headIsBeyondMaximalDimensions() {
+        return head.position.x > DIMENSION / FIELDWIDTH || head.position.y > DIMENSION / FIELDWIDTH;
+    }
+
+    private boolean headIsOutOfMap() {
+        return headIsBelowMinimalDimensions() || headIsBeyondMaximalDimensions();
+    }
+
+    public boolean containsPoint(Point point) {
+        if (head.position.equals(point)) {
+            return true;
+        } else {
+            for (SnakePart snakePart : tail.body) {
+                if (snakePart.position.equals(point)) {
+                    return true;
                 }
             }
         }
-        if (head.position.x < 0 || head.position.y < 0) {
-            return true;
-        }
-        return head.position.x > 9 || head.position.y > 9;
+        return false;
     }
 
+    private boolean headIsOnTail() {
+        if (tail.body != null && tail.body.size() > 0) {
+            List<Field> elementsOnHead = tail.body.stream()
+                    .filter(field -> field.position.equals(head.position))
+                    .collect(Collectors.toList());
+            if(elementsOnHead.size() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isDead(List<Field> fields) {
+        return headIsOutOfMap() || headIsOnTail() || isOnBlock(fields);
+    }
+
+    private boolean isOnBlock(List<Field> fields) {
+        for (Field field : fields) {
+            if (field.position.equals(head.position)) {
+                return true;
+            }
+        }
+        return false;
+    }
     public Tail getTail() {
         return tail;
-    }
-
-    public void setTail(Tail tail) {
-        this.tail = tail;
     }
 
     public Head getHead() {
         return head;
     }
 
-    public void setHead(Head head) {
-        this.head = head;
-    }
 }
