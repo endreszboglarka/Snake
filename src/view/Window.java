@@ -1,6 +1,7 @@
 package view;
 
 import controller.Map;
+import model.Field;
 import utils.SnakeKeyListener;
 
 import javax.swing.*;
@@ -43,23 +44,21 @@ public class Window extends JFrame {
     }
 
     private void drawSnake(Graphics g) {
-        g.setColor(Color.blue);
-        g.fillRect(map.snake.getHead().position.x * FIELDWIDTH, map.snake.getHead().position.y * FIELDWIDTH, FIELDWIDTH, FIELDWIDTH);
-        map.snake.getTail().body
-                .forEach(i -> g.fillRect(
-                        i.position.x * FIELDWIDTH,
-                        i.position.y * FIELDWIDTH,
-                        FIELDWIDTH,
-                        FIELDWIDTH));
+        drawField(g, map.snake.getHead(), Color.blue);
+        map.snake.getTail().body.forEach(i -> drawField(g, i, Color.blue));
     }
 
     private void drawBlocks(Graphics g) {
-        g.setColor(Color.black);
-        map.fields
-                .forEach(i -> g.fillRect(
-                        i.position.x * FIELDWIDTH,
-                        i.position.y * FIELDWIDTH,
-                        FIELDWIDTH,
-                        FIELDWIDTH));
+        map.fields.forEach(i -> drawField(g, i, Color.black));
     }
+
+    private void drawField(Graphics g, Field field, Color color) {
+        g.setColor(color);
+        g.fillRect(
+                field.position.x * FIELDWIDTH,
+                field.position.y * FIELDWIDTH,
+                FIELDWIDTH,
+                FIELDWIDTH);
+    }
+
 }
