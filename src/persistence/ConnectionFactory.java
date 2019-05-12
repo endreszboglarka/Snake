@@ -1,8 +1,9 @@
 package persistence;
 
 
+
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.optional.MysqlConnectionPoolDataSource;
+import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
 
 import java.sql.SQLException;
 
@@ -19,8 +20,8 @@ public class ConnectionFactory {
             conn.setServerName("127.0.0.1");
             conn.setPort(3306);
             conn.setDatabaseName("snake");
-            conn.setUser("root");
-            conn.setPassword("root");
+            conn.setUser("snake");
+            conn.setPassword("Snakebeadando");
         }
         return (Connection) conn.getPooledConnection().getConnection();
     }
