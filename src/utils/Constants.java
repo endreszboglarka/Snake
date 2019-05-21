@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Constants {
     public static final int FIELDWIDTH = 20;
-    public static final int DIMENSION = 800;
+    public static final int DIMENSION = 400;
     public static final int OFFSET = 20;
     public static final int FIELDCOUNT = DIMENSION / FIELDWIDTH;
     public static final int SPEED = 1000 / (100 / FIELDWIDTH);

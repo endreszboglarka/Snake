@@ -16,10 +16,12 @@ import static utils.Constants.FIELDWIDTH;
 public class GamePanel extends JPanel {
     Map map;
 
-    GamePanel(Graphics g) {
+    GamePanel() {
         map = new Map();
-        setPreferredSize(new Dimension(DIMENSION, DIMENSION));
-        map.timer.addActionListener(e -> paint(g));
+        setPreferredSize(new Dimension(DIMENSION,DIMENSION));
+        setMinimumSize(new Dimension(DIMENSION,DIMENSION));
+        setSize(new Dimension(DIMENSION,DIMENSION));
+        map.timer.addActionListener(e -> update());
         setBackground(Color.black);
         map.timer.start();
     }
@@ -27,8 +29,15 @@ public class GamePanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+
+    }
+
+    public void update() {
+        Graphics g = getGraphics();
+
         g.setColor(Color.black);
         g.fillRect(0, 0, DIMENSION, DIMENSION);
+
         drawBlocks(g);
         if (map.snake.isOnApple(map.apple)) {
             map.apple = map.generateApple();

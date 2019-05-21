@@ -15,8 +15,9 @@ public class Window extends JFrame {
 
     public Window() {
         setProperties();
-        //makeMenu();
+
         paintPanel();
+        makeMenu();
         pack();
 
     }
@@ -24,13 +25,16 @@ public class Window extends JFrame {
     public void setProperties() {
         setTitle("Snake");
         //setSize(DIMENSION, DIMENSION);
-        setSize(1000, 1000);
-        setLayout(new BorderLayout(10,10));
+        //setSize(new Dimension(DIMENSION, DIMENSION));
+        //setPreferredSize(new Dimension(DIMENSION, DIMENSION));
+        //setMinimumSize(new Dimension(DIMENSION, DIMENSION));
+        //setLayout(new BorderLayout(10,10));
         //JButton jb=new JButton("alma");
         //jb.setSize(10,10);
         //add(jb, BorderLayout.NORTH);
-        setResizable(false);
+        setResizable(true);
         setVisible(true);
+        setLayout(new BorderLayout());
         //setLayout(new GridLayout(400,400));
         //gameMenu = new GameMenu("Options");
         //setJMenuBar(gameMenu);
@@ -38,8 +42,10 @@ public class Window extends JFrame {
     }
 
     public void paintPanel() {
-        gamePanel = new GamePanel(getGraphics());
-        add(gamePanel, BorderLayout.SOUTH);
+
+        gamePanel = new GamePanel();
+        add(gamePanel,BorderLayout.NORTH);
+
         //getContentPane().add(gamePanel, BorderLayout.SOUTH);
         addKeyListener(new SnakeKeyListener(gamePanel.map));
         //pack();
@@ -62,6 +68,7 @@ public class Window extends JFrame {
         JMenuItem menuNewGame = new JMenuItem(new AbstractAction("New Game") {
             @Override
             public void actionPerformed(ActionEvent e) {
+                remove(gamePanel);
                 paintPanel();
             }
         });
@@ -71,8 +78,6 @@ public class Window extends JFrame {
         menuBar.add(menuGame);
         setJMenuBar(menuBar);
 
-        setLayout(new BorderLayout(0,10));
-
     }
 
 
@@ -80,7 +85,7 @@ public class Window extends JFrame {
     public void paint(Graphics g) {
         super.paint(g);
         if (g != null && this.gamePanel != null) {
-            this.gamePanel.paint(g);
+            //this.gamePanel.paint(g);
         }
     }
 

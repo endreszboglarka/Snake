@@ -23,17 +23,28 @@ public class Map {
     public Timer timer;
 
     public Map() {
-        snake = new Snake(new Head(new Point(0, FIELDCOUNT / 2), Direction.DOWN),
+        Random randDir = new Random();
+        int rand = randDir.nextInt(5);
+        Direction dir;
+        switch (rand) {
+            case 1: dir = Direction.UP; break;
+            case 2: dir = Direction.DOWN; break;
+            case 3: dir = Direction.LEFT; break;
+            case 4: dir = Direction.RIGHT; break;
+            default: dir = Direction.RIGHT;
+        }
+
+        snake = new Snake(new Head(new Point(FIELDCOUNT / 2, FIELDCOUNT / 2), dir),
                 new Tail(new ArrayList<>(
                         Collections.singletonList(
-                                new SnakePart(new Point(0, FIELDCOUNT / 2 - 1))
+                                new SnakePart(new Point(FIELDCOUNT / 2, FIELDCOUNT / 2 - 1))
                         )
                 )
                 )
         );
         fields = new ArrayList<>();
         generateBlocks();
-        apple =  generateApple();
+        apple = generateApple();
         timer = new Timer(SPEED, e -> snake.move());
     }
 
