@@ -1,7 +1,5 @@
 package persistence;
 
-
-
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource;
 
@@ -13,7 +11,7 @@ public class ConnectionFactory {
     private ConnectionFactory() {
     }
 
-    Connection getConnection() throws ClassNotFoundException, SQLException {
+    public static Connection getConnection() throws ClassNotFoundException, SQLException {
         if (conn == null) {
             Class.forName("com.mysql.jdbc.Driver");
             conn = new MysqlConnectionPoolDataSource();

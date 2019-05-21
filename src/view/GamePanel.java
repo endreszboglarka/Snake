@@ -2,6 +2,10 @@ package view;
 
 import controller.Map;
 import model.Field;
+import persistence.Database;
+import view.HighScoreWindow;
+import persistence.Database;
+import javax.swing.JFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +39,8 @@ public class GamePanel extends JPanel {
             int score = map.snake.getTail().body.size() - 1;
             JOptionPane.showMessageDialog(this,
                     "Your score is ".concat(Integer.toString(score).concat(".")));
+            Database database = new Database(score);
+            HighScoreWindow hsw = new HighScoreWindow(database.getHighScores());
         } else {
             drawSnake(g);
         }
